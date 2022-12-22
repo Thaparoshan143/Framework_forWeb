@@ -20,6 +20,11 @@ namespace Roshan
 
     void copyFileContent(FILE *s, FILE *d);
     
+    void copyString(char *s,char *d, int l);
+    
+    char* getSAllocatedMemoryPointer(int n);
+
+
 
 
 }

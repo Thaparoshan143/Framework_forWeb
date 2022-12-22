@@ -140,4 +140,20 @@ namespace Roshan
             temp=fgetc(s);
         }
     }
+
+    void copyString(char *s,char *d,int l)
+    {
+        for(int i=0;i<l;i++)
+        {
+            *(d+i)=*(s+i);
+        }
+    }
+
+
+    char* getSAllocatedMemoryPointer(int n)
+    {
+        return (char*) malloc(sizeof(char)*n);
+    }
+
+
 }

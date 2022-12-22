@@ -1,19 +1,25 @@
 #pragma once
 
 #include"iostream"
+#include"Rutility.h"
 
 namespace Roshan
 {
     class Rstring
     {
-       char *s;
-       int length;
+        char *s;
+        int length;
 
-       Rstring();
-       Rstring(char *s);
+        Rstring();
+        Rstring(char *s);
 
-       int FindPointerLength(char *p);
+        void AllocateAndAssign(char *s,char *d,int l);
+        void UpdatePointerAndLength(char *s);
 
+        public:
+        int GetLength();
+        void SetString(char *s);
+        void PrintString();
 
     };
 }

@@ -1,6 +1,5 @@
 #include"Rstring.h"
 
-
 namespace Roshan
 {
     Rstring::Rstring()
@@ -11,12 +10,40 @@ namespace Roshan
 
     Rstring::Rstring(char *s)
     {
-        int temp=FindPointerLength(s);
-        this->s= (char*) malloc(sizeof(char)*temp+1);
+        UpdatePointerAndLength(s);
     }
 
-    int Rstring::FindPointerLength(char *p)
+    // Public Method
+    int Rstring::GetLength()
     {
-        
+        return this->length;
     }
+
+    void Rstring::SetString(char *s)
+    {
+        UpdatePointerAndLength(s);
+    }
+
+    void Rstring::PrintString()
+    {
+        printString(this->s);
+    }
+
+
+
+    // Helper Methods
+    void Rstring::UpdatePointerAndLength(char *s)
+    {
+        int temp=getStringLength(s);
+        AllocateAndAssign(s,this->s,temp);
+        this->length=temp;
+    }
+
+    void AllocateAndAssign(char *s,char *d, int l)
+    {
+        d = getSAllocatedMemoryPointer(l+1);
+        copyString(s,d,l);
+    }
+
+
 }
