@@ -19,6 +19,7 @@ namespace Roshan
     void appendStringFileAtIndex(FILE *fp,char *s,int fIndex);
 
     void copyFileContent(FILE *s, FILE *d);
+    
 
 
 }
