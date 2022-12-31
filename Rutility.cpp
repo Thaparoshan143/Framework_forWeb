@@ -156,5 +156,13 @@ namespace Roshan
         return (char*) malloc(sizeof(char)*n);
     }
 
+    void copyStringFT(char *s, char *d, int ds, int de)
+    {
+        for(int i=ds;i<de;i++)
+        {
+            *(d+i)=*(s++);
+        }
+    }
+
 
 }

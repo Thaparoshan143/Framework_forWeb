@@ -15,6 +15,7 @@ namespace Roshan
 
     Rstring::~Rstring()
     {
+        // Clear the pointer used, but not working free don't know why?
         // free(this->s);
     }
     
@@ -58,6 +59,26 @@ namespace Roshan
         free(this->s);
         this->SetString(rhs.GetString());
         return *this;
+    }
+
+    Rstring Rstring::operator + (Rstring rhs)
+    {
+        int tl=this->GetLength() + getStringLength(rhs.GetString());
+        Rstring stemp;
+        char *temp=getSAllocatedMemoryPointer(tl);
+        copyStringFT(this->s,temp,0,this->length);
+        copyStringFT(rhs.GetString(),temp,this->length,tl);
+        stemp=temp;
+        return stemp;
+    }
+
+    char* Rstring::operator + (char* s)
+    {
+        int tl=this->GetLength() + getStringLength(s);
+        char *temp=getSAllocatedMemoryPointer(tl);
+        copyStringFT(this->s,temp,0,this->length);
+        copyStringFT(s,temp,this->length,tl);
+        return temp;
     }
 
 }

@@ -24,7 +24,7 @@ namespace Roshan
     
     char* getSAllocatedMemoryPointer(int n);
 
-
+    void copyStringFT(char *s, char *d, int ds, int de);
 
 
 }

@@ -22,7 +22,8 @@ namespace Roshan
         void SetString(char* s);
 
         // operator overloader
-
+        char* operator + (char* s);
+        Rstring operator + (Rstring rhs);
         char* operator = (char* s);
         Rstring operator = (Rstring rhs);
 
