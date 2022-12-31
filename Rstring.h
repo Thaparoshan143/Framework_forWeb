@@ -14,10 +14,12 @@ namespace Roshan
         public:
         Rstring();
         Rstring(char* s);
+        ~Rstring();
 
         int GetLength();
         void PrintString();
         char* GetString();
+        void SetString(char* s);
 
         // operator overloader
 
@@ -26,9 +28,6 @@ namespace Roshan
 
         // Helpers
 
-        private:
-        void AllocateAssignString(char* s, char* d);
-        void HelperAssign(char* s, char* d);
 
     };
 }

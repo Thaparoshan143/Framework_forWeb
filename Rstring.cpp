@@ -10,9 +10,12 @@ namespace Roshan
 
     Rstring::Rstring(char* s)
     {
-        this->length=getStringLength(s);
-        this->s=getSAllocatedMemoryPointer(this->length);
-        copyString(s,this->s,this->length);
+        this->SetString(s);
+    }
+
+    Rstring::~Rstring()
+    {
+        // free(this->s);
     }
     
     int Rstring::GetLength()
@@ -32,22 +35,29 @@ namespace Roshan
         return temp;
     }
     
+    void Rstring::SetString(char* s)
+    {
+        this->length=getStringLength(s);
+        this->s=getSAllocatedMemoryPointer(this->length);
+        copyString(s,this->s,this->length);
+    }
+
     // Helper methods in class
 
     
     // operator overloader
     char* Rstring::operator = (char* s)
     {
-        this->length=getStringLength(s);
-        delete(this->s);
-        this->s=getSAllocatedMemoryPointer(this->length);
-        copyString(s,this->s,this->length);
+        free(this->s);
+        this->SetString(s);
         return this->s;
     }
 
     Rstring Rstring::operator = (Rstring rhs)
     {
-
+        free(this->s);
+        this->SetString(rhs.GetString());
+        return *this;
     }
 
 }
