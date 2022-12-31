@@ -7,11 +7,11 @@ using namespace Roshan;
 int main()
 {
     Rstring temp;
+    int fl=temp.GetLength();
 
-    printString(temp.GetString());
+    temp="This is the second assignment construct";
     int l=temp.GetLength();
-    temp.PrintString();
-    std::cout << "The length of string is  : " << l << std::endl;
+    std::cout << "The length of string is  : " << fl <<"," << l<< std::endl;
 
     return 0;
 }

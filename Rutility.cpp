@@ -51,6 +51,7 @@ namespace Roshan
             std::cout << temp ;
             temp = *(++s);
         }
+        std::cout << std::endl;
     }
 
 
