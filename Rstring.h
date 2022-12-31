@@ -10,13 +10,13 @@ namespace Roshan
         char *s;
         int length;
 
-        Rstring();
-        Rstring(char *s);
-
         void AllocateAndAssign(char *s,char *d,int l);
         void UpdatePointerAndLength(char *s);
 
         public:
+
+        Rstring();
+        Rstring(char *s);
         int GetLength();
         void SetString(char *s);
         void PrintString();
