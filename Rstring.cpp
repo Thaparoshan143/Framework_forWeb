@@ -54,14 +54,14 @@ namespace Roshan
         return this->s;
     }
 
-    Rstring Rstring::operator = (Rstring rhs)
+    Rstring Rstring::operator = (Rstring &rhs)
     {
         free(this->s);
         this->SetString(rhs.GetString());
         return *this;
     }
 
-    Rstring Rstring::operator + (Rstring rhs)
+    Rstring Rstring::operator + (Rstring &rhs)
     {
         int tl=this->GetLength() + getStringLength(rhs.GetString());
         Rstring stemp;
@@ -80,5 +80,7 @@ namespace Roshan
         copyStringFT(s,temp,this->length,tl);
         return temp;
     }
+
+  
 
 }

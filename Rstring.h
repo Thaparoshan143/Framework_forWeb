@@ -1,6 +1,6 @@
 #pragma once
 
-#include"iostream"
+#include<iostream>
 #include"Rutility.h"
 
 namespace Roshan
@@ -23,9 +23,9 @@ namespace Roshan
 
         // operator overloader
         char* operator + (char* s);
-        Rstring operator + (Rstring rhs);
+        Rstring operator + (Rstring &rhs);
         char* operator = (char* s);
-        Rstring operator = (Rstring rhs);
+        Rstring operator = (Rstring &rhs);
 
         // Helpers
 
