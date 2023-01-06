@@ -10,4 +10,5 @@ int main()
     Rstring sum=s1+s2;
     sum.PrintString();
     return 0;
+
 }

@@ -55,8 +55,9 @@ namespace Roshan
     }
 
 
-    int searchStringFileFIndex(FILE *fp,char *s)
+    int searchStringFileFIndex(FILE *fp,char* fName, char* s)
     {
+        fp=fopen(fName,"w");
         char temp=fgetc(fp);
         int indexCount=1;
         int sLength=getStringLength(s);
@@ -72,6 +73,7 @@ namespace Roshan
                     if(compareString(s+1,tempPtr))
                     {
                         std::cout<<"All letter matched\n";
+                        fclose(fp);
                         return indexCount;
                     }
                 }
@@ -84,6 +86,7 @@ namespace Roshan
             indexCount++;
             temp=fgetc(fp);
         }
+        fclose(fp);
         return -1;
     }
 
@@ -100,15 +103,14 @@ namespace Roshan
         return true;
     }
 
-    void appendStringFileAtIndex(FILE *fp,char *s,int fIndex)
+    void appendStringFileAtIndex(FILE *fp,char* fn, char *s,int fIndex)
     {
         FILE *fPtrTemp;
 
-        fPtrTemp=fopen("temp.txt","wb");
-
-        copyFileContent(fp,fPtrTemp);
+        fPtrTemp=fopen("temp.txt","w");
+        copyFileContent(fp,fPtrTemp,fn,"temp.txt");
         fclose(fp);
-        fp=fopen("test.txt","wb");
+        fp=fopen(fn,"w");
         int indexCounter=1;
         int sLength=getStringLength(s);
         char tempChar=fgetc(fPtrTemp);
@@ -132,14 +134,18 @@ namespace Roshan
 
 
 
-    void copyFileContent(FILE *s, FILE *d)
+    void copyFileContent(FILE *s, FILE *d,char* sn, char* dn)
     {
+        s=fopen(sn,"r");
+        d=fopen(dn,"w");
         char temp=fgetc(s);
         while(temp!=EOF)
         {
             fputc(temp,d);
             temp=fgetc(s);
         }
+        fclose(s);
+        fclose(d);
     }
 
     void copyString(char *s,char *d,int l)
@@ -164,7 +170,7 @@ namespace Roshan
             *(d+i)=*(s++);
         }
     }
-
+    
 
 
 }
