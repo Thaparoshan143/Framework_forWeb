@@ -153,7 +153,8 @@ namespace Roshan
 
     char* getSAllocatedMemoryPointer(int n)
     {
-        return (char*) malloc(sizeof(char)*n);
+        return new char[sizeof(char)*n];
+        // return (char*) malloc(sizeof(char)*n);
     }
 
     void copyStringFT(char *s, char *d, int ds, int de)
@@ -163,6 +164,7 @@ namespace Roshan
             *(d+i)=*(s++);
         }
     }
+
 
 
 }
