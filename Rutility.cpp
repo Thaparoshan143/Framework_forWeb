@@ -132,8 +132,6 @@ namespace Roshan
         }
     }
 
-
-
     void copyFileContent(FILE *s, FILE *d,char* sn, char* dn)
     {
         s=fopen(sn,"r");
@@ -170,7 +168,55 @@ namespace Roshan
             *(d+i)=*(s++);
         }
     }
-    
 
+    char* toString(int n)
+    {
+        int l=getDigitLength(n);
+        char* temp=getSAllocatedMemoryPointer(l+1);
+        numToArrParser(n,temp,l);
+        arrConstAddChar(temp,l,ZERO_START);
+
+        //string terminator for safety  explicit//
+        temp[l]='\0';
+        return temp;
+    }
+
+    int getDigitLength(int n)
+    {
+        int count=0;
+        while(n>0)
+        {
+            n/=10;
+            count++;
+        }
+        return count;
+    }
+
+    void numToArrParser(int n, char* a, int aSize)
+    {
+        for(int i=aSize-1;i>=0;i--)
+        {
+            *(a+aSize-1-i)=getNumDigitOfIndex(n,i);
+        }
+    }
+
+    int getNumDigitOfIndex(int n, int in)
+    {
+        int temp;
+        for(int i=0;i<in;i++)
+        {
+            n/=10;
+        }
+        temp=n%10;
+        return temp;
+    }  
+
+    void arrConstAddChar(char *a, int aSize, int c)
+    {
+        for(int i=0;i<aSize;i++)
+        {
+            *(a+i)+=c;
+        }
+    } 
 
 }

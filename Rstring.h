@@ -20,6 +20,7 @@ namespace Roshan
         void PrintString();
         char* GetString();
         void SetString(char* s);
+        int ToInt();
 
         // operator overloader
         char* operator + (char* s);

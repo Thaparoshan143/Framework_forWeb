@@ -2,6 +2,8 @@
 
 #include<iostream>
 
+#define ZERO_START 48
+
 namespace Roshan
 {
     int getStringLength(char *s);
@@ -18,7 +20,7 @@ namespace Roshan
 
     void appendStringFileAtIndex(FILE *fp,char *s,int fIndex);
 
-    void copyFileContent(FILE *s, FILE *d);
+    void copyFileContent(FILE *s, FILE *d,char* sn, char* dn);
     
     void copyString(char *s,char *d, int l);
     
@@ -26,5 +28,14 @@ namespace Roshan
 
     void copyStringFT(char *s, char *d, int ds, int de);
 
+    char* toString(int n);
+
+    int getDigitLength(int n);
+
+    void numToArrParser(int n, char *a, int aSize);
+
+    int getNumDigitOfIndex(int n, int in);
+
+    void arrConstAddChar(char* a, int aSize, int c);
 
 }
