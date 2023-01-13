@@ -202,7 +202,7 @@ namespace Roshan
 
     int getNumDigitOfIndex(int n, int in)
     {
-        int temp;
+        int temp=0;
         for(int i=0;i<in;i++)
         {
             n/=10;
