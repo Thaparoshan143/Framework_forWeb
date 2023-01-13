@@ -45,7 +45,7 @@ namespace Roshan
 
     int Rstring::ToInt()
     {
-        int temp=0;
+        int temp;
         int val=0;
         for(int i=0;i<this->length;i++)
         {
