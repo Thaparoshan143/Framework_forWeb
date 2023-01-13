@@ -43,6 +43,19 @@ namespace Roshan
         copyString(s,this->s,this->length);
     }
 
+    int Rstring::ToInt()
+    {
+        int temp=0;
+        int val=0;
+        for(int i=0;i<this->length;i++)
+        {
+            temp=this->s[i];
+            temp=temp-48;
+            val=val*10+temp;
+        }
+        return val;
+    }
+
     // Helper methods in class
 
     
