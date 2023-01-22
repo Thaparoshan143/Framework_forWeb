@@ -57,37 +57,30 @@ namespace Roshan
 
     int searchStringFileFIndex(FILE *fp,char* fName, char* s)
     {
-        fp=fopen(fName,"w");
-        char temp=fgetc(fp);
-        int indexCount=1;
+        fp=fopen(fName,"r");
+        int index=0;
         int sLength=getStringLength(s);
-        char *tempPtr=(char*) malloc(sizeof(char)*sLength+1);
+        char temp=getc(fp);
+        char sTemp[sLength-1];
         while(temp!=EOF)
         {
-            if(temp==*(s))
+            if(temp==s[0])
             {
-                std::cout<<"File has : "<<temp<<", first char is : "<<*s<<std::endl;        
-                fgets(tempPtr,sLength,fp);
-                if(*(tempPtr+sLength-2)==*(s+sLength-1))
+                fgets(sTemp,sLength-1,fp);
+                if(compareString(sTemp,s+1))
                 {
-                    if(compareString(s+1,tempPtr))
-                    {
-                        std::cout<<"All letter matched\n";
-                        fclose(fp);
-                        return indexCount;
-                    }
+                    return index;
                 }
                 else
                 {
-                    fseek(fp,-sLength+1,SEEK_CUR);
+                    fseek(fp,-(sLength-2),SEEK_CUR);
                 }
             }
-
-            indexCount++;
-            temp=fgetc(fp);
+            index++;
+            temp=getc(fp);
         }
-        fclose(fp);
         return -1;
+        fclose(fp);
     }
 
     bool compareString(char *s1, char *s2)
