@@ -23,7 +23,7 @@ namespace Roshan
 
         fIndex=searchStringHelper(sT,sfT,sT,sfT);
         
-        return fIndex-1;
+        return fIndex;
     }
 
     int searchStringHelper(char *s, char *sf,char *os,char *osf)
@@ -32,8 +32,8 @@ namespace Roshan
         {
             if(*s==*sf)
             {
-                std::cout<<sf<<std::endl;
-                std::cout<<s<<std::endl;
+                // std::cout<<sf<<std::endl;
+                // std::cout<<s<<std::endl;
                 return searchStringHelper((s+1),(sf+1),os,osf);
             }
             else
@@ -55,9 +55,9 @@ namespace Roshan
     }
 
 
-    int searchStringFileFIndex(FILE *fp,char* fName, char* s)
+    int searchStringFileFIndex(char* fName, char* s)
     {
-        fp=fopen(fName,"r");
+        FILE* fp=fopen(fName,"r");
         int index=0;
         int sLength=getStringLength(s);
         char temp=getc(fp);
@@ -69,6 +69,7 @@ namespace Roshan
                 fgets(sTemp,sLength-1,fp);
                 if(compareString(sTemp,s+1))
                 {
+                    fclose(fp);
                     return index;
                 }
                 else
@@ -79,56 +80,64 @@ namespace Roshan
             index++;
             temp=getc(fp);
         }
-        return -1;
         fclose(fp);
+        return -1;
     }
 
     bool compareString(char *s1, char *s2)
     {
-        int tempSLength=getStringLength(s1);
-        for(int i=0;i<tempSLength;i++)
+        int tempS1Length=getStringLength(s1);
+        int tempS2Length=getStringLength(s2);
+        if(tempS1Length==tempS2Length)
         {
-            if(*(s1+i)!=*(s2+i))
+            for(int i=0;i<tempS1Length;i++)
             {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    void appendStringFileAtIndex(FILE *fp,char* fn, char *s,int fIndex)
-    {
-        FILE *fPtrTemp;
-
-        fPtrTemp=fopen("temp.txt","w");
-        copyFileContent(fp,fPtrTemp,fn,"temp.txt");
-        fclose(fp);
-        fp=fopen(fn,"w");
-        int indexCounter=1;
-        int sLength=getStringLength(s);
-        char tempChar=fgetc(fPtrTemp);
-        while(tempChar!=EOF)
-        {
-            if(indexCounter==fIndex)
-            {
-                for(int i=0;i<sLength;i++)
+                if(*(s1+i)!=*(s2+i))
                 {
-                    fputc(*(s+i),fp);
+                    return false;
                 }
             }
-            else
-            {
-                fputc(tempChar,fp);
-                tempChar=fgetc(fPtrTemp);
-            }
-            indexCounter++;
+            return true; 
         }
+        else
+        return false;
+
     }
 
-    void copyFileContent(FILE *s, FILE *d,char* sn, char* dn)
+    //method to see and update //
+    // void appendStringFileAtIndex(FILE *fp,char* fn, char *s,int fIndex)
+    // {
+    //     FILE *fPtrTemp;
+
+    //     fPtrTemp=fopen("temp.txt","w");
+    //     copyFileContent(fp,fPtrTemp,fn,"temp.txt");
+    //     fclose(fp);
+    //     fp=fopen(fn,"w");
+    //     int indexCounter=1;
+    //     int sLength=getStringLength(s);
+    //     char tempChar=fgetc(fPtrTemp);
+    //     while(tempChar!=EOF)
+    //     {
+    //         if(indexCounter==fIndex)
+    //         {
+    //             for(int i=0;i<sLength;i++)
+    //             {
+    //                 fputc(*(s+i),fp);
+    //             }
+    //         }
+    //         else
+    //         {
+    //             fputc(tempChar,fp);
+    //             tempChar=fgetc(fPtrTemp);
+    //         }
+    //         indexCounter++;
+    //     }
+    // }
+
+    void copyFileContent(char* sn, char* dn)
     {
-        s=fopen(sn,"r");
-        d=fopen(dn,"w");
+        FILE *s=fopen(sn,"r");
+        FILE* d=fopen(dn,"w");
         char temp=fgetc(s);
         while(temp!=EOF)
         {
@@ -148,26 +157,51 @@ namespace Roshan
     }
 
 
-    char* getSAllocatedMemoryPointer(int n)
+    char* getSAllocatedMemoryPointer(int s)
     {
-        return new char[sizeof(char)*n];
+        return new char[sizeof(char)*s];
+        // if c style needed
         // return (char*) malloc(sizeof(char)*n);
     }
 
-    void copyStringFT(char *s, char *d, int ds, int de)
+    char* reallocStringBlock(char* p,int s)
+    {
+        int pSize=getStringLength(p);
+        char* temp=new char[sizeof(char)*s];
+        if(pSize<s)
+        {
+            copyString(p,temp,pSize);    
+        }
+        else
+        {
+            copyString(p,temp,s-1);
+            temp[s]='\0';
+        }
+        delete(p);
+        return temp;
+    }
+
+    void appendStringFT(char *s, char *d, int ds, int de)
     {
         for(int i=ds;i<de;i++)
         {
             *(d+i)=*(s++);
         }
+        *(d+de)='\0';
+    }
+    
+    char* sliceString(char* s, int i, int n)
+    {
+        char* temp=getSAllocatedMemoryPointer(n);
+        copyString(s+i,temp,n);
+        return temp;
     }
 
     char* toString(int n)
     {
         int l=getDigitLength(n);
-        char* temp=getSAllocatedMemoryPointer(l+1);
-        numToArrParser(n,temp,l);
-        arrConstAddChar(temp,l,ZERO_START);
+        char* temp=getSAllocatedMemoryPointer(l);
+        numDigitToArr(n,temp,l-1);
 
         //string terminator for safety  explicit//
         temp[l]='\0';
@@ -185,11 +219,15 @@ namespace Roshan
         return count;
     }
 
-    void numToArrParser(int n, char* a, int aSize)
+    void numDigitToArr(int n, char* a, int aSize)
     {
-        for(int i=aSize-1;i>=0;i--)
+        int rem=0;
+        while(aSize>=0)
         {
-            *(a+aSize-1-i)=getNumDigitOfIndex(n,i);
+            rem=n%10;
+            n=n/10;
+            a[aSize]=rem+ZERO_START;
+            aSize--;
         }
     }
 

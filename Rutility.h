@@ -14,28 +14,31 @@ namespace Roshan
 
     void printString(char *s);
 
-    int searchStringFileFIndex(FILE *fp,char* fn,char *s);
+    int searchStringFileFIndex(char* fn,char *s);
 
     bool compareString(char *s1, char *s2);
 
-    void appendStringFileAtIndex(FILE *fp,char *s,int fIndex);
+    // void appendStringFileAtIndex(FILE *fp,char *s,int fIndex);
 
-    void copyFileContent(FILE *s, FILE *d,char* sn, char* dn);
+    void copyFileContent(char* sn, char* dn);
     
     void copyString(char *s,char *d, int l);
     
-    char* getSAllocatedMemoryPointer(int n);
+    char* getSAllocatedMemoryPointer(int s);
 
-    void copyStringFT(char *s, char *d, int ds, int de);
+    char* reallocStringBlock(char* p,int s);
+
+    void appendStringFT(char *s, char *d, int ds, int de);
+
+    char* sliceString(char* s, int i, int n);
 
     char* toString(int n);
 
     int getDigitLength(int n);
 
-    void numToArrParser(int n, char *a, int aSize);
+    void numDigitToArr(int n, char *a, int aSize);
 
     int getNumDigitOfIndex(int n, int in);
 
     void arrConstAddChar(char* a, int aSize, int c);
-
 }
