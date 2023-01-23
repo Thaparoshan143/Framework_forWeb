@@ -1,1 +1,0 @@
-This the file test using index approach.
