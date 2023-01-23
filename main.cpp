@@ -5,7 +5,6 @@
 using namespace Roshan;
 
 int main()
-{
-    printf("Test");
-
+{   
+    
 }
