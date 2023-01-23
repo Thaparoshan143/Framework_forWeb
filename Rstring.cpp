@@ -79,8 +79,8 @@ namespace Roshan
         int tl=this->GetLength() + getStringLength(rhs.GetString());
         Rstring stemp;
         char *temp=getSAllocatedMemoryPointer(tl);
-        copyStringFT(this->s,temp,0,this->length);
-        copyStringFT(rhs.GetString(),temp,this->length,tl);
+        copyString(this->s,temp,this->length);
+        appendStringFT(rhs.GetString(),temp,this->length,tl);
         stemp=temp;
         return stemp;
     }
@@ -89,8 +89,8 @@ namespace Roshan
     {
         int tl=this->GetLength() + getStringLength(s);
         char *temp=getSAllocatedMemoryPointer(tl);
-        copyStringFT(this->s,temp,0,this->length);
-        copyStringFT(s,temp,this->length,tl);
+        copyString(this->s,temp,this->length);
+        appendStringFT(s,temp,this->length,tl);
         return temp;
     }
 
