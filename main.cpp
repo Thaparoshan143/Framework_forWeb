@@ -6,7 +6,5 @@ using namespace Roshan;
 
 int main()
 {   
-    appendStringInFileAfter("temphtml.html","black","background-color:");
-
-    appendStringInFileAfter("temphtml.html","white",";color:");
+    std::cout << "hello there" << std::endl;
 }
