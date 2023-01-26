@@ -55,29 +55,33 @@ namespace Roshan
     }
 
 
-    int searchStringFileFIndex(char* fName, char* s)
+    int searchStringFileFIndex(char* fn, char* s)
     {
-        FILE* fp=fopen(fName,"r");
+        FILE* fp=fopen(fn,"r");
         int index=0;
         int sLength=getStringLength(s);
         char temp=getc(fp);
         char sTemp[sLength-1];
+        char *sTempp;
         while(temp!=EOF)
         {
+            index++;
             if(temp==s[0])
             {
-                fgets(sTemp,sLength-1,fp);
-                if(compareString(sTemp,s+1))
+                fgets(sTemp,sLength,fp);
+                if(*(sTemp+sLength-2)==*(s+sLength-1))
                 {
-                    fclose(fp);
-                    return index;
+                    if(compareString(sTemp,s+1))
+                    {
+                        fclose(fp);
+                        return index;
+                    }
                 }
                 else
                 {
-                    fseek(fp,-(sLength-2),SEEK_CUR);
+                    fseek(fp,-(sLength-1),SEEK_CUR);
                 }
             }
-            index++;
             temp=getc(fp);
         }
         fclose(fp);
@@ -105,34 +109,65 @@ namespace Roshan
     }
 
     //method to see and update //
-    // void appendStringFileAtIndex(FILE *fp,char* fn, char *s,int fIndex)
-    // {
-    //     FILE *fPtrTemp;
+    void appendStringInFileAt(char* fn, char *s,int fIndex)
+    {
+        char tempright[]="tempright.txt";
+        char templeft[]="templeft.txt";
 
-    //     fPtrTemp=fopen("temp.txt","w");
-    //     copyFileContent(fp,fPtrTemp,fn,"temp.txt");
-    //     fclose(fp);
-    //     fp=fopen(fn,"w");
-    //     int indexCounter=1;
-    //     int sLength=getStringLength(s);
-    //     char tempChar=fgetc(fPtrTemp);
-    //     while(tempChar!=EOF)
-    //     {
-    //         if(indexCounter==fIndex)
-    //         {
-    //             for(int i=0;i<sLength;i++)
-    //             {
-    //                 fputc(*(s+i),fp);
-    //             }
-    //         }
-    //         else
-    //         {
-    //             fputc(tempChar,fp);
-    //             tempChar=fgetc(fPtrTemp);
-    //         }
-    //         indexCounter++;
-    //     }
-    // }
+        // Reading from source and spliting in index
+        char tempChar=' ';
+        FILE *temp=fopen(templeft,"w");
+        FILE *source=fopen(fn,"r");
+
+        for(int i=0;i<fIndex && tempChar!=EOF;i++)
+        {
+            tempChar=fgetc(source);
+            fputc(tempChar,temp);
+        }
+        fclose(temp);
+        temp=fopen(tempright,"w");
+        while(tempChar!=EOF)
+        {
+            tempChar=fgetc(source);
+            fputc(tempChar,temp);
+        }
+        fclose(temp);
+        fclose(source);
+
+        //Reading from splitter and combining in source//
+        copyFileContent(templeft,fn);
+        appendStringInFile(fn,s);
+        appendFileContent(tempright,fn);
+    }
+
+    void appendStringInFileAfter(char* fn,char *s,char *aft)
+    {
+        int aIndex=searchStringFileFIndex(fn,aft);
+        int aftLength=getStringLength(aft);
+        // Reusing the above method for now
+        appendStringInFileAt(fn,s,aIndex+aftLength-1);
+    }
+
+    void appendStringInFile(char* fn,char* s)
+    {
+        FILE* fptr=fopen(fn,"a");
+        fprintf(fptr,"%s",s);
+        fclose(fptr);
+    }
+
+    void appendFileContent(char* sn, char * dn)
+    {
+        FILE* fptrs=fopen(sn,"r");
+        FILE* fptrd=fopen(dn,"a");
+        char temp=getc(fptrs);
+        while(temp!=EOF)
+        {
+            putc(temp,fptrd);
+            temp=getc(fptrs);
+        }
+        fclose(fptrs);
+        fclose(fptrd);
+    }
 
     void copyFileContent(char* sn, char* dn)
     {
@@ -188,6 +223,34 @@ namespace Roshan
             *(d+i)=*(s++);
         }
         *(d+de)='\0';
+    }
+
+    void appendString(char *s, char *d)
+    {
+        int sLength=getStringLength(s);
+        int dLength=getStringLength(d);
+        for(int i=0;i<dLength;i++)
+        {
+            *(s+i+sLength)=*(d+i);
+        }
+        *(s+sLength+dLength)='\0';
+    }
+
+    char* appendStringR(char *s, char *d)
+    {
+        int sLength=getStringLength(s);
+        int dLength=getStringLength(d);
+        char* tempS=getSAllocatedMemoryPointer(sLength+dLength);
+        for(int i=0;i<sLength;i++)
+        {
+            *(tempS+i)=*(s+i);
+        }
+        for(int i=0;i<dLength;i++)
+        {
+            *(tempS+i+sLength)=*(d+i);
+        }
+        *(s+sLength+dLength)='\0';
+        return tempS;
     }
     
     char* sliceString(char* s, int i, int n)
@@ -249,5 +312,23 @@ namespace Roshan
             *(a+i)+=c;
         }
     } 
+
+    void printInt(char *t, int n)
+    {
+        std::cout<< t << " : " << n <<std::endl;
+    }
+
+    //need minor update to work flawlessley
+    char* getStringFromFile(FILE* fp,int sl)
+    {
+        char* tempPtr=getSAllocatedMemoryPointer(sl+1);
+        char temp;
+        for(int i=0;i<sl;i++)
+        {
+            *(tempPtr+i)=fgetc(fp);
+        }
+        *(tempPtr+sl)='\0';
+        return tempPtr;
+    }
 
 }
