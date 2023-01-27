@@ -54,7 +54,6 @@ namespace Roshan
         std::cout << std::endl;
     }
 
-
     int searchStringFileFIndex(char* fn, char* s)
     {
         FILE* fp=fopen(fn,"r");
@@ -330,5 +329,4 @@ namespace Roshan
         *(tempPtr+sl)='\0';
         return tempPtr;
     }
-
 }
