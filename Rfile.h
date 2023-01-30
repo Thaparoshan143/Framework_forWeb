@@ -10,6 +10,7 @@ namespace Roshan
     {
         FILE *fPtr;
         Rstring fileName;
+        int fileSize;
 
         public:
         Rfile();

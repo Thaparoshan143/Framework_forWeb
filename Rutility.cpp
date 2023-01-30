@@ -54,37 +54,43 @@ namespace Roshan
         std::cout << std::endl;
     }
 
-    int searchStringFileFIndex(char* fn, char* s)
+    int searchStringFIndexFromFile(char* fn, char* s)
     {
         FILE* fp=fopen(fn,"r");
         int index=0;
         int sLength=getStringLength(s);
         char temp=getc(fp);
-        char sTemp[sLength-1];
-        char *sTempp;
+        char *stemp;
         while(temp!=EOF)
         {
             index++;
             if(temp==s[0])
             {
-                fgets(sTemp,sLength,fp);
-                if(*(sTemp+sLength-2)==*(s+sLength-1))
+                stemp=getFileString(sLength-1,fp);
+                if(compareString(s+1,stemp))
                 {
-                    if(compareString(sTemp,s+1))
-                    {
-                        fclose(fp);
-                        return index;
-                    }
+                    return index;
                 }
                 else
                 {
                     fseek(fp,-(sLength-1),SEEK_CUR);
                 }
             }
-            temp=getc(fp);
+            temp=fgetc(fp);
         }
         fclose(fp);
         return -1;
+    }
+
+    char* getFileString(int n, FILE *fp)
+    {
+        char *temp=getSAllocatedMemoryPointer(n+1);
+        for(int i=0;i<n;i++)
+        {
+            *(temp+i)=getc(fp);
+        }
+        *(temp+n)='\0';
+        return temp;
     }
 
     bool compareString(char *s1, char *s2)
@@ -141,7 +147,7 @@ namespace Roshan
 
     void appendStringInFileAfter(char* fn,char *s,char *aft)
     {
-        int aIndex=searchStringFileFIndex(fn,aft);
+        int aIndex=searchStringFIndexFromFile(fn,aft);
         int aftLength=getStringLength(aft);
         // Reusing the above method for now
         appendStringInFileAt(fn,s,aIndex+aftLength-1);

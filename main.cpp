@@ -6,5 +6,5 @@ using namespace Roshan;
 
 int main()
 {   
-    
+    std::cout << "Hello there !" <<std::endl;    
 }

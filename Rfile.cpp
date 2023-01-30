@@ -75,7 +75,7 @@ namespace Roshan
 
     int Rfile::GetStringIndex(char *s)
     {
-        return searchStringFileFIndex(this->fileName.GetString(),s);
+        return searchStringFIndexFromFile(this->fileName.GetString(),s);
     }
 
 
@@ -85,5 +85,6 @@ namespace Roshan
         this->fPtr=fopen(this->fileName.GetString(),m);
     }
 
+    
 
 }

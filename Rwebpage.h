@@ -14,5 +14,7 @@ namespace Roshan
         NewPage();
         NewPage(char* pn);
         NewPage(Rstring pn);
+
+
     };
 }

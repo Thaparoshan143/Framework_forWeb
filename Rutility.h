@@ -14,7 +14,9 @@ namespace Roshan
 
     void printString(char *s);
 
-    int searchStringFileFIndex(char* fn,char *s);
+    int searchStringFIndexFromFile(char* fn,char *s);
+
+    char* getFileString(int n, FILE *fp);
 
     bool compareString(char *s1, char *s2);
 
